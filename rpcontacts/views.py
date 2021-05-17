@@ -30,20 +30,16 @@ class Window(QMainWindow):
         self.setupUI()
 
     def setupUI(self):
-        """Setup the main window's GUI."""
-        # Create the table view widget
         self.table = QTableView()
         self.table.setModel(self.contactsModel.model)
         self.table.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.table.resizeColumnsToContents()
-        # Create buttons
         self.addButton = QPushButton("Add")
         self.addButton.clicked.connect(self.openAddDialog)
         self.deleteButton = QPushButton("Delete")
         self.deleteButton.clicked.connect(self.deleteContact)
         self.clearAllButton = QPushButton("Clear All")
         self.clearAllButton.clicked.connect(self.clearContacts)
-        # Lay out the GUI
         layout = QVBoxLayout()
         layout.addWidget(self.addButton)
         layout.addWidget(self.deleteButton)
@@ -53,14 +49,12 @@ class Window(QMainWindow):
         self.layout.addLayout(layout)
 
     def openAddDialog(self):
-        """Open the Add Contact dialog."""
         dialog = AddDialog(self)
         if dialog.exec() == QDialog.Accepted:
             self.contactsModel.addContact(dialog.data)
             self.table.resizeColumnsToContents()
 
     def deleteContact(self):
-        """Delete the selected contact from the database."""
         row = self.table.currentIndex().row()
         if row < 0:
             return
@@ -76,7 +70,6 @@ class Window(QMainWindow):
             self.contactsModel.deleteContact(row)
 
     def clearContacts(self):
-        """Remove all contacts from the database."""
         messageBox = QMessageBox.warning(
             self,
             "Warning!",
@@ -89,9 +82,7 @@ class Window(QMainWindow):
 
 
 class AddDialog(QDialog):
-    """Add Contact dialog."""
     def __init__(self, parent=None):
-        """Initializer."""
         super().__init__(parent=parent)
         self.setWindowTitle("Add Contact")
         self.layout = QVBoxLayout()
@@ -101,8 +92,6 @@ class AddDialog(QDialog):
         self.setupUI()
 
     def setupUI(self):
-        """Setup the Add Contact dialog's GUI."""
-        # Create line edits for data fields
         self.nameField = QLineEdit()
         self.nameField.setObjectName("Name")
         self.jobField = QLineEdit()
@@ -111,14 +100,12 @@ class AddDialog(QDialog):
         self.emailField.setObjectName("Email")
         self.phoneField = QLineEdit()
         self.phoneField.setObjectName("Phone number")
-        # Lay out the data fields
         layout = QFormLayout()
         layout.addRow("Name:", self.nameField)
         layout.addRow("Job:", self.jobField)
         layout.addRow("Email:", self.emailField)
         layout.addRow("Phone number:", self.phoneField)
         self.layout.addLayout(layout)
-        # Add standard buttons to the dialog and connect them
         self.buttonsBox = QDialogButtonBox(self)
         self.buttonsBox.setOrientation(Qt.Horizontal)
         self.buttonsBox.setStandardButtons(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
@@ -127,7 +114,6 @@ class AddDialog(QDialog):
         self.layout.addWidget(self.buttonsBox)
 
     def accept(self):
-        """Accept the data provided through the dialog."""
         self.data = []
         for field in (self.nameField, self.jobField, self.emailField, self.phoneField):
             if not field.text():
@@ -136,7 +122,7 @@ class AddDialog(QDialog):
                     "Error!",
                     f"You must provide a contact's {field.objectName()}",
                 )
-                self.data = None  # Reset .data
+                self.data = None  
                 return
 
             self.data.append(field.text())
