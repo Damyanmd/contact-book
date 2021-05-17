@@ -4,7 +4,17 @@ from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 
 def _createContactsTable():
     createTableQuery = QSqlQuery()
-    return createTableQuery.exec()
+    return createTableQuery.exec(
+        """
+        CREATE TABLE IF NOT EXISTS contacts (
+            id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
+            name VARCHAR(40) NOT NULL,
+            job VARCHAR(50),
+            email VARCHAR(40) NOT NULL,
+            phone VARCHAR(40) NOT NULL
+        )
+        """
+    )
 
 def createConnection(databaseName):
     connection = QSqlDatabase.addDatabase("QSQLITE")
