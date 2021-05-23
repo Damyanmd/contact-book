@@ -3,6 +3,7 @@
 
 Easy program to use ,as alternative to others like Microsoft Excel, for saving your contacts.
 
+![Capture](https://user-images.githubusercontent.com/77811406/119252528-8339a580-bbb5-11eb-8d91-6e8a13946d7e.PNG)
 
 ## Installation
 
