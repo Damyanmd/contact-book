@@ -1,5 +1,4 @@
 # contact-book
-## Description
 
 Easy program to use, as alternative to others like Microsoft Excel, for saving your contacts.
 
